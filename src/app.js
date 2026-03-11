@@ -2,7 +2,11 @@ const express = require("express");
 
 const app = express();
 
+const produtosRoutes = require("./routes/produtos");
+
 app.use(express.json());
+
+app.use("/api/v1/produtos", produtosRoutes);
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
