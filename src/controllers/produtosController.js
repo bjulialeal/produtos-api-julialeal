@@ -18,6 +18,27 @@ function obterProduto(req, res) {
 }
 
 function criarProduto(req, res) {
+	const { nome, descricao, preco, categoria, estoque } = req.body;
+
+ 	 if (!nome || !descricao || preco === undefined || !categoria || estoque === undefined) {
+   		 return res.status(400).json({ erro: "Campos obrigatórios não informados" });
+ 	 }
+
+  	const novoProduto = {
+    		id: nextId++,
+    		nome,
+    		descricao,
+    		preco,
+    		categoria,
+    		estoque,
+    		ativo: true,
+    		criado_em: new Date(),
+	    	atualizado_em: new Date()
+ 	 };
+
+ 	 produtos.push(novoProduto);
+
+ 	 res.status(201).json(novoProduto);
 }
 
 function atualizarProduto(req, res) {
