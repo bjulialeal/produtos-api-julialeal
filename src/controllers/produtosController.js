@@ -2,6 +2,7 @@ let produtos = [];
 let nextId = 1;
 
 function listarProdutos(req, res) {
+  res.status(200).json(produtos);
 }
 
 function obterProduto(req, res) {
