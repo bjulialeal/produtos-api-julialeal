@@ -1,6 +1,10 @@
 let produtos = [];
 let nextId = 1;
 
+function encontrar(id) {
+        return produtos.find((produto) => produto.id === id);
+}         
+
 function listarProdutos(req, res) {
   res.status(200).json(produtos);
 }
@@ -45,6 +49,33 @@ function atualizarProduto(req, res) {
 }
 
 function deletarProduto(req, res) {
+}
+
+function atualizar(req, res) {
+ 	 const id = Number(req.params.id);
+	 const produtoEncontrado = encontrar(id);
+
+  	if (!produtoEncontrado) {
+    		return res.status(404).json({ mensagem: "Produto não encontrado" });
+  	}
+
+  	const indice = produtos.findIndex((produto) => produto.id === id);
+
+  	const produtoAtualizado = {
+    		id: produtoEncontrado.id,
+    		nome: req.body.nome,
+    		descricao: req.body.descricao,
+    		preco: req.body.preco,
+    		categoria: req.body.categoria,
+    		estoque: req.body.estoque,
+    		ativo: req.body.ativo,
+    		criado_em: produtoEncontrado.criado_em,
+    		atualizado_em: new Date()
+  	};
+
+  	produtos[indice] = produtoAtualizado;
+	
+  	return res.status(200).json(produtoAtualizado);
 }
 
 module.exports = {
